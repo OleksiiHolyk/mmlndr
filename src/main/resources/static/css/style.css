@@ -6,7 +6,7 @@ td.today {
     color: orangered;
 }
 
-td.active{
+td.active {
     background-color: deepskyblue;
 }
 
@@ -14,7 +14,28 @@ td, th {
     text-align: center;
 }
 
-td:hover, th:hover{
+td:hover, th:hover {
     cursor: pointer;
 }
 
+td {
+    border: 2px solid #000;
+
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    border: none
+}
+
+#datePickerPage,
+.bootstrap-datetimepicker-widget,
+.list-unstyled,
+.list-unstyled > li,
+.datepicker,
+.datepicker-days,
+.table-condensed {
+    height: inherit;
+}

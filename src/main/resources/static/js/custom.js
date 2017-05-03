@@ -1,15 +1,22 @@
 /**
  * Created by Oleksii on 28.04.2017.
  */
-$( document ).ready(function () {
+function show2Week(){
+}
+
+
+$(document).ready(function () {
     moment.locale('en', {
         week: {dow: 1}
     });
 
-    $('#datetimepicker12').datetimepicker({
+    $('#datePickerPage').datetimepicker({
         inline: true,
         format: 'DD/MM/YYYY'
     });
+
+    show2Week();
+
 
 
 })
