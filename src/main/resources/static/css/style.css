@@ -1,7 +1,3 @@
-table {
-    width: 100%;
-}
-
 td.today {
     color: orangered;
 }
@@ -35,7 +31,18 @@ html, body {
 .list-unstyled,
 .list-unstyled > li,
 .datepicker,
-.datepicker-days,
-.table-condensed {
+.datepicker-days {
     height: inherit;
 }
+
+.table-condensed {
+    height: calc(100% - 10px);
+    width: calc(100% - 10px);
+    margin: auto;
+}
+
+ul{
+    margin: 0 !important;
+}
+
+.accordion-toggle{display: none}
