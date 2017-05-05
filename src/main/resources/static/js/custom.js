@@ -8,8 +8,13 @@ function show2Week() {
         $('div.datepicker-days').find('th.prev').click();
     } else {
     }
-    getMemes();
+    $('.table-condensed').find('tr').each(function () {
+        $(this).hide();
+    });
+    $('td.active').parents('tr').show().css({"height": "50%"});
+    $('td.active').parents('tr').prev().show().css({"height": "50%"});
 
+    getMemes();
 }
 
 function tempName(data) {
