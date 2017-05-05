@@ -35,22 +35,21 @@ function getMemes() {
         });
 }
 
-function addMem() {
+function addMem(jsonData) {
     $.ajax({
         url: "/memes",
         dataType: "JSON",
         type: "POST",
         contentType: "application/json",
-        data: JSON.stringify({
-            "shortDescription": 'israel',
-            "fullDescription": 'Kamakawiwoole '
-        })
+        data: jsonData
     })
         .done(function (msg) {
             console.log('POST[done]=' + JSON.stringify(msg));
+            alert('Mem has been  successfully added')
         })
         .fail(function (jqXHR, textStatus) {
             console.log('POST[fail]=' + JSON.stringify(textStatus));
+            alert('Error operation')
         });
 
 }
@@ -64,13 +63,25 @@ $(document).ready(function () {
     $('#datePickerPage').datetimepicker({
         inline: true,
         format: 'DD/MM/YYYY'
+        /*display 'today' button*/
         // showTodayButton: true
     });
     /*    insertValue();
      show2Week();*/
-    $('td.day').click(function () {
-        console.log('kjsdhfkjhsakdjfhkjshd');
-    })
+
+    $("#addForm").submit(function (event) {
+        var data = {};
+        $(this).serializeArray().map(function (x) {
+            if (x.name == 'date') {
+                data[x.name] = Date.parse(x.value);
+            } else {
+                data[x.name] = x.value;
+            }
+        });
+        addMem(JSON.stringify(data));
+        /*close modal window after form submit*/
+        event.preventDefault();
+    });
 
     // addMem();
     // getMemes();
