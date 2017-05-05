@@ -4,12 +4,12 @@
 
 function show2Week() {
     /*Detect if active day in first row at page*/
-    if ($('table').find('td.active').parents('tr').is(':first-child')) {
-        $('.datepicker-days').find('th.prev').click();
-        console.log('Y')
+    if ($('table.table-condensed').find('td.active').parents('tr').is(':first-child')) {
+        $('div.datepicker-days').find('th.prev').click();
     } else {
-        console.log('N')
     }
+    getMemes();
+
 }
 
 function tempName(data) {
@@ -73,7 +73,7 @@ $(document).ready(function () {
         week: {dow: 1}
     });
 
-    $('#datePickerPage').datetimepicker({
+    $('div#datePickerPage').datetimepicker({
         inline: true,
         format: 'DD/MM/YYYY'
         /*display 'today' button*/
@@ -82,7 +82,7 @@ $(document).ready(function () {
 
     show2Week();
 
-    $("#addForm").submit(function (event) {
+    $("form#addForm").submit(function (event) {
         var data = {};
         $(this).serializeArray().map(function (x) {
             if (x.name == 'date') {
@@ -96,11 +96,7 @@ $(document).ready(function () {
         event.preventDefault();
     });
 
-    getMemes();
-
-    // show2Week();
-
-    $('#clickMe').click(function () {
+    $('button#clickMe').click(function () {
         show2Week();
     })
 });
