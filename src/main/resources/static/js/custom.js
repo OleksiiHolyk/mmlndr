@@ -3,11 +3,12 @@
  */
 
 function show2Week() {
-    // $('table').find('td.today').parents('tr').css({'background-color': 'khaki'})
-
-    if ($('table').find('td.active').parents('tr').first()) {
-        $('th.prev').click();
-        $('table').find('td.today').parents('tr').css({'background-color': 'khaki'})
+    /*Detect if active day in first row at page*/
+    if ($('table').find('td.active').parents('tr').is(':first-child')) {
+        $('.datepicker-days').find('th.prev').click();
+        console.log('Y')
+    } else {
+        console.log('N')
     }
 }
 
@@ -79,6 +80,8 @@ $(document).ready(function () {
         // showTodayButton: true
     });
 
+    show2Week();
+
     $("#addForm").submit(function (event) {
         var data = {};
         $(this).serializeArray().map(function (x) {
@@ -95,4 +98,9 @@ $(document).ready(function () {
 
     getMemes();
 
+    // show2Week();
+
+    $('#clickMe').click(function () {
+        show2Week();
+    })
 });
