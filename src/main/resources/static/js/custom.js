@@ -11,14 +11,23 @@ function show2Week() {
     }
 }
 
-function insertMemIntoForm(data) {
-    $('table').find('td').each(function () {
-        var cellText = $(this).text();
-        var spanDate, spanMemesShort;
-        spanDate = $('<span></span>').addClass('date').append(cellText);
-        spanMemesShort = $('<span></span>').addClass('memesPerDayShort').append('json');
-        $(this).empty().append(spanDate).append(spanMemesShort);
-    })
+function tempName(data) {
+    var dateLong, shortD, date, dateFormattedMDY, dateFormattedDMY;
+    dateLong = data.date;
+    shortD = data.shortDescription;
+    date = new Date(dateLong);
+    dateFormattedMDY = moment(date).format('MM/DD/YYYY');
+    dateFormattedDMY = moment(date).format('DD/MM/YYYY');
+    console.log('dt=' + dateFormattedMDY + ', shrt=' + shortD);
+
+
+    // $("td").find("[data-day='" + dateFormatted + "']").css({'background-color':'khaki'});
+    var spanMemesShort, spanDate;
+    spanDate = $('<span></span>').addClass('date').append(dateFormattedDMY);
+    spanMemesShort = $('<span></span>').addClass('memesPerDayShort').append(shortD);
+
+    $("td[data-day='" + dateFormattedMDY + "']").append(spanMemesShort);
+
 }
 
 function getMemes() {
@@ -28,7 +37,11 @@ function getMemes() {
         type: "GET"
     })
         .done(function (msg) {
-            console.log('GET[done]=' + JSON.stringify(msg));
+            // console.log('GET[done]=' + JSON.stringify(msg));
+            $.each(msg._embedded.memes, function (key, value) {
+                // console.log('mem='+JSON.stringify(value))
+                tempName(value);
+            });
         })
         .fail(function (jqXHR, textStatus) {
             console.log('GET[fail]=' + JSON.stringify(textStatus));
@@ -54,7 +67,6 @@ function addMem(jsonData) {
 
 }
 
-
 $(document).ready(function () {
     moment.locale('en', {
         week: {dow: 1}
@@ -66,8 +78,6 @@ $(document).ready(function () {
         /*display 'today' button*/
         // showTodayButton: true
     });
-    /*    insertValue();
-     show2Week();*/
 
     $("#addForm").submit(function (event) {
         var data = {};
@@ -83,7 +93,6 @@ $(document).ready(function () {
         event.preventDefault();
     });
 
-    // addMem();
-    // getMemes();
+    getMemes();
 
 });
