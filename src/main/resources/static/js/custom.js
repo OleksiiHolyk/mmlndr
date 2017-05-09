@@ -85,6 +85,13 @@ $(document).ready(function () {
         // showTodayButton: true
     });
 
+    $('.datepicker-days').find('td.day').click(function (e) {
+        e.preventDefault();
+        console.log('click event at day div');
+        return false;
+    });
+
+
     show2Week();
 
     $("form#addForm").submit(function (event) {
@@ -101,7 +108,7 @@ $(document).ready(function () {
         event.preventDefault();
     });
 
-    $('button#clickMe').click(function () {
+    /*$('button#clickMe').click(function () {
         show2Week();
-    })
+    })*/
 });
