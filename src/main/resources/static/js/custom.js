@@ -73,7 +73,7 @@ function addMem(jsonData) {
     })
         .done(function (msg) {
             console.log('POST[done]=' + JSON.stringify(msg));
-            alert('Mem has been  successfully added')
+            location.reload();
         })
         .fail(function (jqXHR, textStatus) {
             console.log('POST[fail]=' + JSON.stringify(textStatus));
