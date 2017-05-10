@@ -17,7 +17,7 @@ function show2Week() {
     getMemes();
 }
 
-function tempName(data) {
+function addDataToCalendar(data) {
     var dateLong, shortD, date, dateFormattedMDY, dateFormattedDMY;
     dateLong = data.date;
     shortD = data.shortDescription;
@@ -37,6 +37,9 @@ function tempName(data) {
 }
 
 function getMemes() {
+    $('div.loader').show();
+    $('div#datePickerPage').hide();
+    $('div#buttonsLine').hide();
     $.ajax({
         url: "/memes",
         dataType: "JSON",
@@ -46,11 +49,17 @@ function getMemes() {
             // console.log('GET[done]=' + JSON.stringify(msg));
             $.each(msg._embedded.memes, function (key, value) {
                 // console.log('mem='+JSON.stringify(value))
-                tempName(value);
+                addDataToCalendar(value);
             });
+            $('div.loader').hide();
+            $('div#datePickerPage').show();
+            $('div#buttonsLine').show();
+
         })
         .fail(function (jqXHR, textStatus) {
             console.log('GET[fail]=' + JSON.stringify(textStatus));
+            $('div.loader').hide();
+
         });
 }
 
@@ -73,6 +82,20 @@ function addMem(jsonData) {
 
 }
 
+function clearForm(formName) {
+    $(formName).find('.modal-body').empty();
+    // $(formName).find('.modal-header').empty();
+}
+
+function insertDataIntoModalRead(data) {
+    clearForm('#readForm');
+
+    var divReadData = $('<div></div>').append(data).addClass('modalReadData');
+    $('form#readForm').find('div.modal-body').append(divReadData);
+    $('div#readDay').modal('show');
+
+}
+
 $(document).ready(function () {
     moment.locale('en', {
         week: {dow: 1}
@@ -85,12 +108,13 @@ $(document).ready(function () {
         // showTodayButton: true
     });
 
-    $('.datepicker-days').find('td.day').click(function (e) {
+    $('div.datepicker-days').find('td.day').click(function (e) {
         e.preventDefault();
-        console.log('click event at day div');
+        var dayMemText = $(this).text();
+
+        insertDataIntoModalRead(dayMemText);
         return false;
     });
-
 
     show2Week();
 
@@ -109,6 +133,6 @@ $(document).ready(function () {
     });
 
     /*$('button#clickMe').click(function () {
-        show2Week();
-    })*/
+     show2Week();
+     })*/
 });
