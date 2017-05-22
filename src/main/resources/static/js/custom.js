@@ -116,6 +116,13 @@ $(document).ready(function () {
         return false;
     });
 
+    /**
+     * input date support for Apple Safari
+     * */
+    if ($('#addMem').find('#date')[0].type != 'date') {
+        $('#addMem').find('#date').datepicker();
+    }
+
     show2Week();
 
     $("form#addForm").submit(function (event) {
