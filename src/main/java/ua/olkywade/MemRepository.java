@@ -12,5 +12,5 @@ import java.util.List;
 @RepositoryRestResource(collectionResourceRel = "memes", path = "memes")
 public interface MemRepository extends MongoRepository<Mem, String> {
     Mem findByShortDescription(@Param("name") String shortDescription);
-    List<Mem> findByFullDescription(@Param("name") String fullDescription);
+    Mem findByFullDescription(@Param("name") String fullDescription);
 }
