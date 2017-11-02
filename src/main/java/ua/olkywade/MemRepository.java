@@ -13,4 +13,5 @@ import java.util.List;
 public interface MemRepository extends MongoRepository<Mem, String> {
     Mem findByShortDescription(@Param("name") String shortDescription);
     Mem findByFullDescription(@Param("name") String fullDescription);
+    List<Mem> findByDateBetween(@Param("from") Long dateFrom, @Param("to") Long DateTo);
 }
