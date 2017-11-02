@@ -63,6 +63,10 @@ function getMemes() {
         });
 }
 
+function clearCalendar(){
+    $("span.memesPerDayShort").remove();
+}
+
 function getMemesByPeriodAjax(Data) {
     $('div.loader').show();
     $('div#datePickerPage').hide();
@@ -75,15 +79,15 @@ function getMemesByPeriodAjax(Data) {
         type: "GET"
     })
         .done(function (msg) {
+            clearCalendar();
             console.log('GET[done]=' + JSON.stringify(msg));
-            /*$.each(msg._embedded.memes, function (key, value) {
+            $.each(msg._embedded.memes, function (key, value) {
                 // console.log('mem='+JSON.stringify(value))
                 addDataToCalendar(value);
-            });*/
+            });
             $('div.loader').hide();
             $('div#datePickerPage').show();
             $('div#buttonsLine').show();
-
         })
         .fail(function (jqXHR, textStatus) {
             console.log('GET[fail]=' + JSON.stringify(textStatus));
@@ -134,16 +138,16 @@ $(document).ready(function () {
         inline: true,
         format: 'DD/MM/YYYY'
         /*display 'today' button*/
-        // showTodayButton: true
+        /*showTodayButton: true*/
     });
 
-    // $('div.datepicker-days').find('td.day').click(function (e) {
-    //     e.preventDefault();
-    //     var dayMemText = $(this).text();
-    //
-    //     insertDataIntoModalRead(dayMemText);
-    //     return false;
-    // });
+    /*    $('div.datepicker-days').find('td.day').click(function (e) {
+     e.preventDefault();
+     var dayMemText = $(this).text();
+
+     insertDataIntoModalRead(dayMemText);
+     return false;
+     });*/
 
     /**
      * input date support for Apple Safari
@@ -173,13 +177,13 @@ $(document).ready(function () {
         $(this).serializeArray().map(function (x) {
             if (x.name == 'df') {
                 var a = new Date(x.value);
-                a.setDate(a.getDate() -1);
-                console.log('a='+a);
+                a.setDate(a.getDate() - 1);
+                console.log('a=' + a);
                 data[x.name] = a.getTime();
             } else if (x.name == 'dt') {
                 var b = new Date(x.value);
-                b.setDate(b.getDate() +1);
-                console.log('b='+b);
+                b.setDate(b.getDate() + 1);
+                console.log('b=' + b);
                 data[x.name] = b.getTime();
             } else {
                 data[x.name] = x.value;
@@ -191,8 +195,10 @@ $(document).ready(function () {
     });
 
     $('button#clickMe').click(function () {
-        show2Week();
+        // show2Week();
+        clearCalendar();
     });
+
 
     getMemes();
 });
