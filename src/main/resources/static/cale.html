@@ -20,6 +20,7 @@
 <div id="buttonsLine">
     <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addMem">Add mem</button>
     <button id="clickMe" class="btn btn-info btn-lg" data-toggle="modal" data-target="#readDay">ClickMe</button>
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#getMemesByPeriod">By Period</button>
     <button id="PrevPeriod" class="btn btn-info btn-lg">PrevPeriod</button>
     <button id="NextPeriod" class="btn btn-info btn-lg">NextPeriod</button>
 </div>
@@ -65,6 +66,27 @@
     </form>
 </div>
 
+<div class="modal fade" id="getMemesByPeriod" role="dialog">
+    <form id="setPeriodForm" class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Set Interval</h4>
+            </div>
+            <div class="modal-body">
+                <label for="date">Date From</label>
+                <input type="date" name="df" id="dateFrom" class="form-control" required>
+                <label for="date">Date To</label>
+                <input type="date" name="dt" id="dateTo" class="form-control" required>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-default" value="Submit">Submit</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </form>
+</div>
 
 <!-- Loader -->
 <div class="loader" style=""></div>

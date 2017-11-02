@@ -63,7 +63,36 @@ function getMemes() {
         });
 }
 
-function addMem(jsonData) {
+function getMemesByPeriodAjax(Data) {
+    $('div.loader').show();
+    $('div#datePickerPage').hide();
+    $('div#buttonsLine').hide();
+    var jsonData = $.parseJSON(Data);
+    console.log(jsonData.df + ", " + jsonData.dt);
+    $.ajax({
+        url: "/memes/search/findByDateBetween?df=" + jsonData.df + "&dt=" + jsonData.dt,
+        dataType: "JSON",
+        type: "GET"
+    })
+        .done(function (msg) {
+            console.log('GET[done]=' + JSON.stringify(msg));
+            /*$.each(msg._embedded.memes, function (key, value) {
+                // console.log('mem='+JSON.stringify(value))
+                addDataToCalendar(value);
+            });*/
+            $('div.loader').hide();
+            $('div#datePickerPage').show();
+            $('div#buttonsLine').show();
+
+        })
+        .fail(function (jqXHR, textStatus) {
+            console.log('GET[fail]=' + JSON.stringify(textStatus));
+            $('div.loader').hide();
+
+        });
+}
+
+function addMemAjax(jsonData) {
     $.ajax({
         url: "/memes",
         dataType: "JSON",
@@ -108,13 +137,13 @@ $(document).ready(function () {
         // showTodayButton: true
     });
 
-    $('div.datepicker-days').find('td.day').click(function (e) {
-        e.preventDefault();
-        var dayMemText = $(this).text();
-
-        insertDataIntoModalRead(dayMemText);
-        return false;
-    });
+    // $('div.datepicker-days').find('td.day').click(function (e) {
+    //     e.preventDefault();
+    //     var dayMemText = $(this).text();
+    //
+    //     insertDataIntoModalRead(dayMemText);
+    //     return false;
+    // });
 
     /**
      * input date support for Apple Safari
@@ -123,7 +152,7 @@ $(document).ready(function () {
         $('div#addMem').find('input#date').datepicker();
     }
 
-    show2Week();
+    // show2Week();
 
     $("form#addForm").submit(function (event) {
         var data = {};
@@ -134,12 +163,36 @@ $(document).ready(function () {
                 data[x.name] = x.value;
             }
         });
-        addMem(JSON.stringify(data));
+        addMemAjax(JSON.stringify(data));
         /*close modal window after form submit*/
         event.preventDefault();
     });
 
-    /*$('button#clickMe').click(function () {
-     show2Week();
-     })*/
+    $("form#setPeriodForm").submit(function (event) {
+        var data = {};
+        $(this).serializeArray().map(function (x) {
+            if (x.name == 'df') {
+                var a = new Date(x.value);
+                a.setDate(a.getDate() -1);
+                console.log('a='+a);
+                data[x.name] = a.getTime();
+            } else if (x.name == 'dt') {
+                var b = new Date(x.value);
+                b.setDate(b.getDate() +1);
+                console.log('b='+b);
+                data[x.name] = b.getTime();
+            } else {
+                data[x.name] = x.value;
+            }
+        });
+        getMemesByPeriodAjax(JSON.stringify(data));
+        /*close modal window after form submit*/
+        event.preventDefault();
+    });
+
+    $('button#clickMe').click(function () {
+        show2Week();
+    });
+
+    getMemes();
 });
