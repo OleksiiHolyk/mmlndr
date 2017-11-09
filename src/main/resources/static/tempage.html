@@ -11,9 +11,45 @@
     <script type="text/javascript" src="js/tempage.js"></script>
 
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/tempage.css">
 </head>
 <body>
-<div id="calendar"></div>
+
+
+<table id="calendar">
+    <thead>
+    <tr class="trDow">
+        <th class="thDow">Пн</th>
+        <th class="thDow">Вт</th>
+        <th class="thDow">Ср</th>
+        <th class="thDow">Чт</th>
+        <th class="thDow">Пт</th>
+        <th class="thDow weekend">Сб</th>
+        <th class="thDow weekend">Нд</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="firstWeek">
+        <td class="day"></td>
+        <td class="day"></td>
+        <td class="day"></td>
+        <td class="day"></td>
+        <td class="day"></td>
+        <td class="day weekend"></td>
+        <td class="day weekend"></td>
+    </tr>
+    <tr class="secondWeek">
+        <td class="day"></td>
+        <td class="day"></td>
+        <td class="day"></td>
+        <td class="day"></td>
+        <td class="day"></td>
+        <td class="day weekend"></td>
+        <td class="day weekend"></td>
+    </tr>
+    </tbody>
+</table>
+
 <button id="getCurrentDate" type="button">BTN</button>
 </body>
 </html>
