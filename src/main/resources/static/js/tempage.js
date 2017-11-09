@@ -13,8 +13,22 @@ function addCurrentDateToCalendar(date) {
 
     var dom = date.getDate();   //date of month
     var dow = date.getDay();    //date of week
-    console.log('dayOfWeek=' + dom);
+    console.log('dayOfWeek=' + dow);
+    console.log('dayOfMonth=' + dom);
+
     $('tr.secondWeek').find('td:eq(' + (dow - 1) + ')').text(dom);
+}
+
+
+function addDateToCalendar(date) {
+
+    var mm = date.getMonth() + 1; // getMonth() is zero-based
+    var dd = date.getDate();
+    var yyyy = date.getFullYear();
+    var formattedDate = (mm > 9 ? '' : '0') + mm + '/' +(dd > 9 ? '' : '0') + dd +'/' + yyyy;
+    console.log(formattedDate)
+
+
 }
 
 function getPeriod(currentDate) {
@@ -33,14 +47,19 @@ function getPeriod(currentDate) {
         return dateArray;
     }
 
-
     var prevDate = new Date(currentDate);
     prevDate.setDate(prevDate.getDate() - 14); // minus the date
 
     var dateArray = getDates(prevDate, currentDate);
     for (i = 0; i < dateArray.length; i++) {
-        console.log(dateArray[i]);
+        // console.log('dateArray'+i+'='+dateArray[i]);
     }
+    var arrN = dateArray.slice(currentDate.getDay());
+    for (i = 0; i < arrN.length; i++) {
+        // console.log('arrN'+i+'='+arrN[i]);
+        addDateToCalendar(arrN[i]);
+    }
+
 }
 
 $(document).ready(function () {
@@ -48,7 +67,7 @@ $(document).ready(function () {
         var today = new Date();
         addCurrentDateToCalendar(today);
         getPeriod(today);
-        console.log('today=' + today)
+        // console.log('today=' + today)
     })
 });
 
