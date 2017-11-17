@@ -27,11 +27,7 @@ function addDateToCalendar(date) {
     var yyyy = date.getFullYear();
     var formattedDate = (mm > 9 ? '' : '0') + mm + '/' + (dd > 9 ? '' : '0') + dd + '/' + yyyy;
 
-    $('tbody').find('td:empty').first().text(dd).attr('data-day',formattedDate);
-
-
-
-
+    $('tbody').find('td:empty').first().text(dd).attr('data-day', formattedDate);
 }
 
 function getPeriod(currentDate) {
@@ -55,23 +51,61 @@ function getPeriod(currentDate) {
 
     var dateArray = getDates(prevDate, currentDate);
     for (i = 0; i < dateArray.length; i++) {
-        console.log('dateArray'+i+'='+dateArray[i]);
+        console.log('dateArray' + i + '=' + dateArray[i]);
     }
-    console.log('currentDate.getDay()='+currentDate.getDay());
-    var arrN = dateArray.slice(7-currentDate.getDay()+1);
+    console.log('currentDate.getDay()=' + currentDate.getDay());
+    var arrN = dateArray.slice(7 - currentDate.getDay() + 1);
     for (i = 0; i < arrN.length; i++) {
         // console.log('arrN'+i+'='+arrN[i]);
         addDateToCalendar(arrN[i]);
     }
+}
 
+function getPeriodFromTo(dtFrom, dtTo, currentDate) {
+    Date.prototype.addDays = function (days) {
+        var dat = new Date(this.valueOf());
+        dat.setDate(dat.getDate() + days);
+        return dat;
+    };
+
+    function getDates(dateFrom, dateTo) {
+        var dateArray = [];
+        while (dateFrom <= dateTo) {
+            dateArray.push(dateFrom);
+            dateFrom = dateFrom.addDays(1);
+        }
+        return dateArray;
+    }
+
+    var prevDate = new Date(currentDate);
+    prevDate.setDate(prevDate.getDate() - 14); // minus the date
+
+    var dateArray = getDates(dtFrom, dtTo);
+    var arrN = dateArray.slice(7 - dtTo.getDay() + 1);
+    for (i = 0; i < arrN.length; i++) {
+        // console.log('arrN'+i+'='+arrN[i]);
+        addDateToCalendar(arrN[i]);
+    }
+}
+
+function drawCalendar(){
+    var today = new Date();
+    getPeriod(today);
 }
 
 $(document).ready(function () {
+    drawCalendar();
+
     $("button#getCurrentDate").click(function () {
         var today = new Date();
-        // addCurrentDateToCalendar(today);
+        // getPeriod(today);
+        console.log('fr=' + $('input#setDtFrom').val() + ', ' + new Date($('input#setDtFrom').val()));
+        console.log('to=' + $('input#setDtTo').val() + ', ' + new Date($('input#setDtTo').val()));
+        var a, b;
+        a = new Date($('input#setDtFrom').val());
+        b = new Date($('input#setDtTo').val());
+        // getPeriodFromTo(a, b, today);
         getPeriod(today);
-        // console.log('today=' + today)
     })
 });
 
